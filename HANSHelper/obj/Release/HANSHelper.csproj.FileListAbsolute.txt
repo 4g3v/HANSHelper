@@ -1,0 +1,8 @@
+C:\Users\Nub\Documents\visual studio 2015\Projects\HANSHelper\HANSHelper\bin\Release\HANSHelper.exe.config
+C:\Users\Nub\Documents\visual studio 2015\Projects\HANSHelper\HANSHelper\bin\Release\HANSHelper.exe
+C:\Users\Nub\Documents\visual studio 2015\Projects\HANSHelper\HANSHelper\bin\Release\HANSHelper.pdb
+C:\Users\Nub\Documents\visual studio 2015\Projects\HANSHelper\HANSHelper\obj\Release\HANSHelper.csprojResolveAssemblyReference.cache
+C:\Users\Nub\Documents\visual studio 2015\Projects\HANSHelper\HANSHelper\obj\Release\HANSHelper.Properties.Resources.resources
+C:\Users\Nub\Documents\visual studio 2015\Projects\HANSHelper\HANSHelper\obj\Release\HANSHelper.csproj.GenerateResource.Cache
+C:\Users\Nub\Documents\visual studio 2015\Projects\HANSHelper\HANSHelper\obj\Release\HANSHelper.exe
+C:\Users\Nub\Documents\visual studio 2015\Projects\HANSHelper\HANSHelper\obj\Release\HANSHelper.pdb

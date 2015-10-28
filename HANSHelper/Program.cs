@@ -13,7 +13,7 @@ namespace HANSHelper
     {
         enum Screen
         {
-            MainMenu, Extract
+            MainMenu, ExtractFS, BuildFS
         }
 
         static void Main(string[] args)
@@ -28,11 +28,15 @@ namespace HANSHelper
                         Console.Clear();
                         Console.WriteLine("HANSHelper - by VegaRoXas");
                         Console.WriteLine("1 - Extract exe-/romfs");
+                        Console.WriteLine("2 - Build romfs");
                         Console.WriteLine("0 - Exit");
                         switch (Console.ReadKey().Key)
                         {
                             case ConsoleKey.D1:
-                                screen = Screen.Extract;
+                                screen = Screen.ExtractFS;
+                                break;
+                            case ConsoleKey.D2:
+                                screen = Screen.BuildFS;
                                 break;
                             case ConsoleKey.D0:
                                 if (File.Exists("ctrtool.exe"))
@@ -40,7 +44,7 @@ namespace HANSHelper
                                 return;
                         }
                         break;
-                    case Screen.Extract:
+                    case Screen.ExtractFS:
                         Console.Clear();
                         if (!File.Exists("ctrtool.exe"))
                         {
@@ -68,6 +72,45 @@ namespace HANSHelper
                                 screen = Screen.MainMenu;
                                 break;
                         }
+                        break;
+                    case Screen.BuildFS:
+                        Console.Clear();
+                        Console.WriteLine("Enter the romfs directory you want to build into a .romfs file (default: romfs)");
+                        string path = Console.ReadLine();
+                        if (string.IsNullOrWhiteSpace(path))
+                            path = "romfs";
+                        if(!Directory.Exists(path))
+                        {
+                            Console.WriteLine("That directory doesn't exist");
+                            Console.ReadKey();
+                            screen = Screen.MainMenu;
+                            break;
+                        }
+                        Console.WriteLine("Enter the name of the romfs file you want to build (default: newromfs.romfs)");
+                        string file = Console.ReadLine();
+                        if (string.IsNullOrWhiteSpace(file))
+                            file = "newromfs.romfs";
+                        Console.WriteLine("Do you want to automatically trim the first 0x1000 bytes? This could be a bit slower than doing it manually. [y]es [n]o (default: yes)");
+                        bool trim = ParseBool(Console.ReadKey().KeyChar, true);
+
+                        var builder = new RomFSBuilder(path, file);
+                        builder.Build();
+
+                        if (trim)
+                        {
+                            Console.WriteLine("Reading the file.");
+                            byte[] old = File.ReadAllBytes(file);
+                            Console.WriteLine("Removing first 0x1000 bytes.");
+                            byte[] newFile = new byte[old.Length - 0x1000];
+                            Buffer.BlockCopy(old, 0x1000, newFile, 0, newFile.Length);
+                            Console.WriteLine("Deleting old file");
+                            File.Delete(file);
+                            Console.WriteLine("Writing new file");
+                            File.WriteAllBytes(file, newFile);
+                        }
+                        Console.WriteLine("Building romfs finished!");
+                        Console.ReadKey();
+                        screen = Screen.MainMenu;
                         break;
                 }
             }
